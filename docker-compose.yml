@@ -4,14 +4,16 @@ services:
   web:
     restart: always
     build: ./web
+    stdin_open: true # interactive
+    tty: true        # interactive
     expose:
       - "8000"
     links:
       - postgres:postgres
       - redis:redis
     volumes:
-      - web-django:/usr/src/app
-      - web-static:/usr/src/app/static
+      - ./web/:/usr/src/app
+      - ./web/static:/web/static
     env_file: .env
     environment:
       DEBUG: 'true'
@@ -23,7 +25,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - web-static:/www/static
+      - ./web/static:/www/static
     links:
       - web:web
 
@@ -47,7 +49,5 @@ services:
       - redisdata:/data
 
 volumes:
-  web-django:
-  web-static:
   pgdata:
   redisdata:

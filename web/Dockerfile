@@ -1,4 +1,10 @@
-FROM python:3.8-slim
+FROM python:3.10-slim
+
+WORKDIR /usr/src/app
+
+# Establecer variables de entorno
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
 RUN python -m pip install --upgrade pip
 
