@@ -4,8 +4,6 @@ services:
   web:
     restart: always
     build: ./web
-    stdin_open: true # interactive
-    tty: true        # interactive
     expose:
       - "8000"
     links:
