@@ -1,0 +1,18 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_div}}
+    <input type="submit" value="Submit">
+</form>
+
+<br><br>
+
+{% if result %}
+{% for key, value in result.items %}
+    <ul>{{key}} : {{value}}</ul>
+    {% endfor %}
+{% endif %}
+
+{% endblock %}

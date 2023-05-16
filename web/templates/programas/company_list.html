@@ -1,0 +1,29 @@
+{% extends "generic/base.html" %}
+
+{% block container %}
+<table class="table">
+    <tr>
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Dirección</th>
+                <th scope="col">Sector</th>
+                <th scope="col">Compañia</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for company in object_list %}
+            <tr>
+                <td><a href="/companies/{{ company.id }}">{{ company.id}}</a></td>
+                <td>{{ company.name }}</td>
+                <td>{{ company.address }}</td>
+                <td>{{ company.sector }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+</table>
+{% if is_paginated %}
+    {% include "generic/pagination.html" %}
+{% endif %}
+
+{% endblock %}

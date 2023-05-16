@@ -1,0 +1,29 @@
+{% extends "generic/base.html" %}
+
+{% block container %}
+<table class="table">
+    <tr>
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Folio</th>
+                <th scope="col">Compañia</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for program in object_list %}
+            <tr>
+                <td><a href="/faculty/{{ program.id }}">{{ program.id }}</a></td>
+                <td>{{ program.name }}</td>
+                <td>{{ program.folio }}</td>
+                <td>{{ program.company }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+</table>
+{% if is_paginated %}
+    {% include "generic/pagination.html" %}
+{% endif %}
+
+{% endblock %}
