@@ -4,7 +4,7 @@ upstream web {
 server {
 
     listen 80;
-    server_name diploamdo.org;
+    server_name diplomado;
     charset utf-8;
 
 

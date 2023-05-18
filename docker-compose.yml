@@ -4,8 +4,9 @@ services:
   web:
     restart: always
     build: ./web
-    ports:
-      - "8000:8000"
+    tty: true
+    expose:
+      - "8000"
     volumes:
       - ./web/:/usr/src/app
       - ./web/static:/www/static
@@ -13,6 +14,8 @@ services:
     environment:
       DEBUG: 'true'
     command: python manage.py runserver 0.0.0.0:8000
+    depends_on:
+      - postgres
 
   nginx:
     restart: always
@@ -21,8 +24,8 @@ services:
       - "80:80"
     volumes:
       - ./web/static:/www/static
-    links:
-      - web:web
+    depends_on:
+      - web
 
   postgres:
     restart: always
@@ -34,6 +37,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_HOST_AUTH_METHOD=trust
+      - TZ=Mexico/General
 
   redis:
     restart: always
@@ -46,3 +50,4 @@ services:
 volumes:
   pgdata:
   redisdata:
+  static_web:
