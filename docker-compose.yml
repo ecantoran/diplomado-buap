@@ -8,6 +8,7 @@ services:
       - "8000:8000"
     volumes:
       - ./web/:/usr/src/app
+      - ./web/static:/www/static
     env_file: .env
     environment:
       DEBUG: 'true'
