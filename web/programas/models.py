@@ -28,13 +28,18 @@ class Company(models.Model):
         PUBLIC = 0, _("Public")
         PRIVATE = 1, _("Private")
 
-    name = models.CharField(max_length=200)
-    street = models.CharField(max_length=120)
-    colony = models.CharField(max_length=20)
-    cp = models.CharField(max_length=7)
-    state = models.CharField(max_length=50)
-    municipality = models.CharField(max_length=50)
-    sector = models.IntegerField(choices=SectorChoices.choices)
+    name = models.CharField(_("Name"), max_length=200)
+    street = models.CharField(_("Street"), max_length=120)
+    colony = models.CharField(_("Colony"), max_length=20)
+    cp = models.CharField(_("Postal Code"), max_length=7)
+    state = models.CharField(_("State"), max_length=50)
+    municipality = models.CharField(_("Municipality"), max_length=50)
+    sector = models.IntegerField(_("Sector"), choices=SectorChoices.choices)
+    phone = models.CharField(max_length=18)
+    director = models.CharField(_("Director's full name"), max_length=200)
+    area_manager = models.CharField(_("Area manager full name"), max_length=200)
+    officer = models.CharField(_("Officer full name"), max_length=200)
+    is_active = models.BooleanField(default=False)
 
     class Meta:
         db_table = "company"

@@ -24,12 +24,13 @@ SECRET_KEY = os.environ.get(
     "SECRET_KEY",
     'django-insecure-8+pp@&ij!y2%3jaw962du'
 )
+print(SECRET_KEY)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = int(os.environ.get("DEBUG", default=0))
+DEBUG = bool(os.environ.get("DEBUG", False))
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOST", [])
-
+ALLOWED_HOSTS = list(filter(None, os.environ.get("ALLOWED_HOST", '').split(",")))
+print(DEBUG)
 
 # Application definition
 
@@ -129,6 +130,10 @@ USE_TZ = True
 STATIC_ROOT = "/www/static/"
 
 STATIC_URL = 'static/'
+
+AUTH_USER_MODEL = "usuarios.CustomUser"
+
+LOGIN_URL = '/login/'
 
 
 

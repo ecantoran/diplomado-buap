@@ -1,7 +1,6 @@
 from django import forms
 
 
-
 class NameForm(forms.Form):
     GENDERS = [
     ('M', 'Mujer'),
@@ -12,3 +11,8 @@ class NameForm(forms.Form):
     password = forms.CharField(label='Password', max_length=30)
     gender = forms.ChoiceField(choices=GENDERS)
     photo = forms.ImageField()
+
+
+class LoginForm(forms.Form):
+    email = forms.EmailField(label="Ingresa tu email")
+    password = forms.CharField(widget=forms.PasswordInput)

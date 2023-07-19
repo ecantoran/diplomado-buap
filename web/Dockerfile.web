@@ -18,3 +18,5 @@ RUN chmod +x /usr/src/app/entrypoint.sh
 
 
 ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
+
+# CMD gunicorn --bind 0.0.0.0:$PORT diplomado.wsgi:application

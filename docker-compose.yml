@@ -3,7 +3,9 @@ version: '3'
 services:
   web:
     restart: always
-    build: ./web
+    build:
+      context: web
+      dockerfile: ./Dockerfile.web
     tty: true
     expose:
       - "8000"
@@ -19,7 +21,9 @@ services:
 
   nginx:
     restart: always
-    build: ./nginx/
+    build:
+      context: nginx
+      dockerfile: ./Dockerfile.nginx
     ports:
       - "80:80"
     volumes:
