@@ -1,14 +1,84 @@
 {% extends "generic/base.html" %}
+{##}
+{#{% block container %}#}
+{#    <div class="card text-center">#}
+{#        <div class="card-body">#}
+{#            <h5 class="card-title">Creación de facultades</h5>#}
+{#            <form method="post">#}
+{#                {% csrf_token %}#}
+{#                {{ form.as_p }}#}
+{#                <button type="submit" class="btn btn-primary">Crear</button>#}
+{#            </form>#}
+{#        </div>#}
+{#    </div>#}
+{#{% endblock %}#}
+
+
+{#{% extends "core/base.html" %}#}
+
+{#{% block nav_color %} bg-dark border-bottom border-bottom-dark {% endblock %}#}
 
 {% block container %}
-    <div class="card text-center">
-        <div class="card-body">
-            <h5 class="card-title">Creación de facultades</h5>
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="btn btn-primary">Crear</button>
-            </form>
+    <section class="d-flex flex-column justify-content-end align-items-center">
+        <div class="container">
+            <div class="m-0 border-0">
+                <div class="mb-3">
+                    <h2>Creación de facultades</h2>
+                </div>
+                <form method="post" class=" needs-validation" {% if form.errors %} novalidate {% else %} was-validated{% endif %}>
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="mb-3">
+                            <label for="{{ field.auto_id }}" class="form-label">{{ field.label }}</label>
+                            {% if field.widget_type == "select" %}
+                                <select class="form-select" aria-label="{{ field.label }}" required>
+                                    {% for item in field %}
+                                        {{ item }}
+                                    {% endfor %}
+                                </select>
+                            {% else %}
+                                <input type="{{ field.widget_type }}" class="form-control" id="{{ field.auto_id }}" name="{{ field.name }}" placeholder="{{ field.label }}" value="{{ field.value|default_if_none:'' }}" {{ field.required }}>
+                            {% endif %}
+                            <div class="invalid-feedback">
+
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% else %}
+                                    Campo requerido
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    <button type="submit" class="btn btn-success">Create
+                    </button>
+                </form>
+            </div>
+
         </div>
-    </div>
+    </section>
+{% endblock %}
+
+{% block custom_js %}
+    <script !src="">
+        (() => {
+            'use strict'
+            console.log("Validation")
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const forms = document.querySelectorAll('.needs-validation')
+            console.log(forms)
+            // Loop over them and prevent submission
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+
+    </script>
 {% endblock %}
