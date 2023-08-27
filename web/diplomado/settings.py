@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'core',
     'usuarios',
     'facultades',
-    'programas'
+    'programas',
+    'formats'
 ]
 
 MIDDLEWARE = [
@@ -75,6 +76,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'diplomado.wsgi.application'
 ASGI_APPLICATION = "diplomado.asgi.application"
@@ -110,6 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -135,5 +138,9 @@ AUTH_USER_MODEL = "usuarios.CustomUser"
 
 LOGIN_URL = '/login/'
 
+# PDF CREATOR API SETTINGS
 
-
+PDF_GENERATOR_API_URL = "https://us1.pdfgeneratorapi.com/api/v4"
+PDF_GENERATOR_WORKSPACE_ID = os.environ.get("PDF_CREATOR_WORKSPACE_ID")
+PDF_GENERATOR_API_KEY = os.environ.get("PDF_CREATOR_API_KEY")
+PDF_GENERATOR_API_SECRET = os.environ.get("PDF_CREATOR_API_SECRET")

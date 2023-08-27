@@ -1,0 +1,35 @@
+{% extends "generic/base.html" %}
+
+{% block container %}
+    <div class="row">
+    <div class="col-10"></div>
+    <div class="col">
+            <a href="/documents/create/" class="btn btn-primary" >
+                Crear nuevo documento
+            </a>
+
+    </div>
+
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead class="thead-light">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for doc in object_list %}
+                <tr>
+                    <th><a href="/documents/{{ doc.id }}/"> {{ doc.id }}</a> </th>
+                    <td> {{ doc.name }}</td>
+                    <td> {{ doc.description }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
