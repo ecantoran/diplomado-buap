@@ -7,6 +7,7 @@ class Program(models.Model):
 
     name = models.CharField(max_length=150)
     folio = models.CharField(max_length=30)
+    description = models.TextField(max_length=1000)
     kind = models.CharField(choices=ProgramChoices.choices, max_length=3)
     area = models.CharField(max_length=50)
     company = models.ForeignKey(
