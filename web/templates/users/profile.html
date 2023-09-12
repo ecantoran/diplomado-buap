@@ -1,7 +1,119 @@
 {% extends "generic/base.html" %}
 
 {% block container %}
-<div class="container-fluid">
-<h1>Perfil de usuario</h1>
-</div>
+    <div class="container-fluid">
+
+        <div class="card m-5">
+            <h3 class="card-header">Perfil de usuario</h3>
+
+            <div class="card-body">
+                <div>
+                    Nombre: {{ user.name }}
+                </div>
+                <div>
+                    Apellido materno: {{ user.first_name }}
+                </div>
+                <div>
+                    Apellido paterno: {{ user.second_surname }}
+                </div>
+            </div>
+        </div>
+
+        <div class="card m-5">
+
+            <h3 class="card-header">Perfil de estudiante</h3>
+
+            <div class="card-body">
+                <h5 class="card-title">Aqui van los datos del estudiante</h5>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="student-tab" data-toggle="tab" href="#student" role="tab" aria-controls="student" aria-selected="true">Datos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="programs-tab" data-toggle="tab" href="#programs" role="tab" aria-controls="programs" aria-selected="false">Programas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents" role="tab" aria-controls="documents" aria-selected="false">Archivos</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="student" role="tabpanel" aria-labelledby="student-tab">
+                        <ul>
+                            <li><b>Facultad:</b> {{ user.studen.faculty.name }} </li>
+                        <li><b>Matricula:</b> {{ user.studen.key }}</li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane fade" id="programs" role="tabpanel" aria-labelledby="programs-tab">
+                        <div class="card-deck m-3">
+                        <div class="card mb-3">
+                            <h4 class="card-header">Servicio Social</h4>
+                            <div class="card-body">
+                                {% if user.student.social_service %}
+                                Datos del programa seleccionado
+                                {% else %}
+                                <b>Debes seleccionar un programa de servicio social</b>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <h4 class="card-header">Servicio Social</h4>
+                            <div class="card-body">
+
+                                {% if user.student.social_service %}
+                                    Datos del programa seleccionado
+                                {% else %}
+                                    <b>Debes seleccionar un programa de practicas profesionales</b>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">
+                        {% regroup documents by get_mode_display as document_list %}
+
+                        <div class="card-deck m-3">
+                        {% for mode in document_list %}
+                            <div class="card">
+                            <h4 class="card-header">{{ mode.grouper }}</h4>
+                                <div class="card-body">
+                                <ul>
+                                    {% for document in mode.list %}
+                                        <li><a href="/documents/{{ document.id }}/download/">{{ document.name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                                </div>
+                            </div>
+
+                        {% endfor %}
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card m-5">
+
+            <h3 class="card-header">Perfil de empresa</h3>
+
+            <div class="card-body">
+                <h5 class="card-title">Aqui van los datos de la empresa</h5>
+                <p class="card-text">Mas datos</p>
+            </div>
+        </div>
+
+    </div>
+
+
+{% endblock %}
+
+{% block custom_js %}
+
+    <script>
+        $('#nav-tab a').on('click', function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        })
+    </script>
 {% endblock %}
