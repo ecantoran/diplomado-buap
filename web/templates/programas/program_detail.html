@@ -3,11 +3,15 @@
 {% block container %}
     <section class="d-flex flex-column justify-content-end align-items-center">
         <div class="container">
-            <div class="m-0 border-0">
-                <div class="mb-3">
-                    <h2>Programa</h2>
+            <div class="card">
+                <h5 class="card-header">{{ object.name }} - {{ object.folio }}</h5>
+                <div class="card-body">
+                    <h5 class="card-title"><b>Tipo:</b> {{ object.get_kind_display }}</h5>
+                    <p class="card-text"><b>Area:</b> {{ object.area }}</p>
+                    <p class="card-text"><b>Ofertado por: </b> {{ object.company }}</p>
+                    <p class="card-text"><b>Descripción</b> {{ object.description }}</p>
+                    <a href="/program/{{ object.id }}/enroll/" class="btn btn-primary">Inscribirse</a>
                 </div>
-
             </div>
 
         </div>
