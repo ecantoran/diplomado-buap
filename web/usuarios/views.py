@@ -4,9 +4,12 @@ from django.views import View
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import DetailView, UpdateView
 
-
+from diplomado import settings
+from formats.models import Document
 from .forms import NameForm, LoginForm
+from .models import CustomUser
 
 
 # Create your views here.
@@ -53,7 +56,7 @@ class LogoutView(LoginRequiredMixin, View):
         return redirect("/")
 
 
-class FormView(View):
+class FormView(LoginRequiredMixin, View):
     form_class = NameForm
     initial = {'key': 'value'}
     template_name = 'users/form.html'
@@ -68,4 +71,15 @@ class FormView(View):
         if form.is_valid():
             context["result"] = form.cleaned_data
             print("Success")
+        return render(request, self.template_name, context=context)
+
+
+class UserProfileView(LoginRequiredMixin, View):
+    model = CustomUser
+    template_name = 'users/profile.html'
+    def get(self, request, *args, **kwargs):
+        documents = Document.objects.all()
+        context = {
+            'documents': documents
+        }
         return render(request, self.template_name, context=context)

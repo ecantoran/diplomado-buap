@@ -1,7 +1,7 @@
 {% extends "generic/base.html" %}
 
 {% block container %}
-    <div class="row">
+    <div class="row m-5">
     <div class="col-10"></div>
     <div class="col">
             <a href="/documents/create/" class="btn btn-primary" >
@@ -24,7 +24,7 @@
             <tbody>
             {% for doc in object_list %}
                 <tr>
-                    <th><a href="/documents/{{ doc.id }}/"> {{ doc.id }}</a> </th>
+                    <th><a href="/documents/{{ doc.id }}/update/"> {{ doc.id }}</a> </th>
                     <td> {{ doc.name }}</td>
                     <td> {{ doc.description }}</td>
                 </tr>

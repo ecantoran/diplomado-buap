@@ -1,20 +1,22 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-
+from core.utils import ProgramChoices, SectorChoices
 
 # Create your models here.
 class Program(models.Model):
-    class KindChoices(models.IntegerChoices):
-        SS = 0, _("Social Service")
-        PP = 1, _("Professional Practice")
 
     name = models.CharField(max_length=150)
     folio = models.CharField(max_length=30)
-    kind = models.IntegerField(choices=KindChoices.choices)
+    kind = models.CharField(choices=ProgramChoices.choices, max_length=3)
     area = models.CharField(max_length=50)
     company = models.ForeignKey(
         "programas.Company",
         on_delete=models.CASCADE
+    )
+    faculty = models.ForeignKey(
+        "facultades.Faculty",
+        on_delete=models.CASCADE,
+        related_name="programs"
     )
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now_add=True)
@@ -22,11 +24,11 @@ class Program(models.Model):
     class Meta:
         db_table = "program"
 
+    def __str__(self):
+        return self.name + " - " + self.folio
+
 
 class Company(models.Model):
-    class SectorChoices(models.IntegerChoices):
-        PUBLIC = 0, _("Public")
-        PRIVATE = 1, _("Private")
 
     name = models.CharField(_("Name"), max_length=200)
     street = models.CharField(_("Street"), max_length=120)
@@ -34,7 +36,7 @@ class Company(models.Model):
     cp = models.CharField(_("Postal Code"), max_length=7)
     state = models.CharField(_("State"), max_length=50)
     municipality = models.CharField(_("Municipality"), max_length=50)
-    sector = models.IntegerField(_("Sector"), choices=SectorChoices.choices)
+    sector = models.CharField(_("Sector"), choices=SectorChoices.choices, max_length=10)
     phone = models.CharField(max_length=18)
     director = models.CharField(_("Director's full name"), max_length=200)
     area_manager = models.CharField(_("Area manager full name"), max_length=200)

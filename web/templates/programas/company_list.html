@@ -1,14 +1,25 @@
 {% extends "generic/base.html" %}
 
 {% block container %}
+    <div class="row m-5">
+        <div class="col-10"></div>
+        <div class="col">
+            <a href="/companies/create/" class="btn btn-primary" >
+                Crear nueva compañia
+            </a>
+
+        </div>
+
+    </div>
 <table class="table">
     <tr>
         <thead class="thead-light">
             <tr>
                 <th scope="col">Id</th>
+                <th scope="col">Nombre</th>
                 <th scope="col">Dirección</th>
                 <th scope="col">Sector</th>
-                <th scope="col">Compañia</th>
+
             </tr>
         </thead>
         <tbody>
@@ -16,7 +27,7 @@
             <tr>
                 <td><a href="/companies/{{ company.id }}">{{ company.id}}</a></td>
                 <td>{{ company.name }}</td>
-                <td>{{ company.address }}</td>
+                <td>{{ company.street }}</td>
                 <td>{{ company.sector }}</td>
             </tr>
             {% endfor %}

@@ -13,7 +13,7 @@
                         <div class="mb-3">
                             <label for="{{ field.auto_id }}" class="form-label">{{ field.label }}</label>
                             {% if field.widget_type == "select" %}
-                                <select class="form-select" aria-label="{{ field.label }}" required>
+                                <select class="form-select" aria-label="{{ field.label }}" id="{{ field.auto_id }}" name="{{ field.name }}" required>
                                     {% for item in field %}
                                         {{ item }}
                                     {% endfor %}
@@ -31,6 +31,7 @@
                             </div>
                         </div>
                     {% endfor %}
+                {{ form.errors }}
 
                     <button type="submit" class="btn btn-success">Create
                     </button>

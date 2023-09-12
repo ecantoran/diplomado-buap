@@ -2,6 +2,16 @@
 
 {% block container %}
 <table class="table">
+    <div class="row m-5">
+        <div class="col-10"></div>
+        <div class="col">
+            <a href="/programs/create/" class="btn btn-primary" >
+                Crear nuevo programa
+            </a>
+
+        </div>
+
+    </div>
     <tr>
         <thead class="thead-light">
             <tr>
@@ -14,7 +24,7 @@
         <tbody>
             {% for program in object_list %}
             <tr>
-                <td><a href="/faculty/{{ program.id }}">{{ program.id }}</a></td>
+                <td><a href="/programs/{{ program.id }}">{{ program.id }}</a></td>
                 <td>{{ program.name }}</td>
                 <td>{{ program.folio }}</td>
                 <td>{{ program.company }}</td>
