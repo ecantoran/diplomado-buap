@@ -29,7 +29,6 @@ class DocumentDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        print(context)
         return context
 
 class DocumentUpdateView(UpdateView):
@@ -42,7 +41,6 @@ class DocumentUpdateView(UpdateView):
         context = super().get_context_data(**kwargs)
         instance = self.get_object()
         context["api_url"] = instance.create_ulr_view()
-        print(context)
         return context
 
 class DocumentGeneratePDF(View):
@@ -59,7 +57,20 @@ class DocumentGeneratePDF(View):
 
     def get_user_data(self, user):
         return {
-            "nombre": "Demo",
-            "apellido": "User",
-            "matricula": "12345"
+            'email': "alumno@alumno.com",
+            'name': "Ramon",
+            'first_surname': "Garcia",
+            'second_surname': "Garcia",
+            'matricula': "201116415",
+            'address': "Av. Independencia 123",
+            'postal_code': "72000",
+            'phone': "123456789",
+            'birthdate': "1992-01-01",
+            'social_service_name': "Programa especial de servicios",
+            'social_service_folio': "SS2012842",
+            'professional_practices_name': "Programa de especial para profesionales",
+            'professional_practices_folio': "PP9092432",
+            'faculty_name': "Facultad de Ingeniería en Todologia",
+            "service_social_adviser": "Juan Perez Perez",
+            "professional_practices_adviser": "Ricardo Rodriguez Torres",
         }
