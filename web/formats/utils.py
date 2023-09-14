@@ -102,11 +102,15 @@ class PDFGeneratorAPI:
                 'birthdate': "1992-01-01",
                 'social_service_name': "Programa especial de servicios",
                 'social_service_folio': "SS2012842",
+                'social_service_description': "Grande descripción del programa de servicio social",
+                'social_service_program_adviser': "Luisa Contreras Cano",
                 'professional_practices_name': "Programa de especial para profesionales",
                 'professional_practices_folio': "PP9092432",
                 'faculty_name': "Facultad de Ingeniería en Todologia",
                 "service_social_adviser": "Juan Perez Perez",
                 "professional_practices_adviser": "Ricardo Rodriguez Torres",
+                'professional_practices_description': "Gran descripción del programa de practicas profesionales",
+                'professional_practices_program_adviser': "Antonio Guillermo Rojas Rojas"
             }
         }
         payload = json.dumps(payload)

@@ -6,6 +6,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
+from core.utils import ProgramChoices
 from formats.models import Document
 
 
@@ -56,14 +57,21 @@ class DocumentGeneratePDF(PermissionRequiredMixin, View):
     def get(self, request, pk, *args, **kwargs):
         if not request.user.student:
             raise PermissionDenied()
+
         try:
             instance = Document.objects.get(pk=pk)
+            if instance.mode == ProgramChoices.SOCIAL_SERVICE and not request.user.student.social_service:
+                raise PermissionDenied()
+            if instance.mode == ProgramChoices.PROFESSIONAL_PRACTICES and not request.user.student.professional_practices:
+                raise PermissionDenied()
             data = self.get_user_data(request.user)
 
             return instance.generate_document(data)
 
         except Document.DoesNotExist:
             raise Http404
+        except PermissionDenied:
+            raise PermissionDenied()
 
     def get_user_data(self, user):
         return user.get_data_to_dict()

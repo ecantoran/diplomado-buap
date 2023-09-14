@@ -51,25 +51,33 @@ class CustomUser(AbstractUser):
         db_table = "users"
 
     def get_data_to_dict(self):
-        social_service = getattr(self, "social_service", "")
-        professional_practices = getattr(self, "professional_practices", "")
-        return {
+        social_service = getattr(self.student, "social_service", None)
+        professional_practices = getattr(self.student, "professional_practices", None)
+        service_company = getattr(social_service, "company", None)
+        professional_company = getattr(professional_practices, "company", None)
+
+        data = {
             'email': self.email,
             'name': self.name,
             'first_surname': self.first_surname,
             'second_surname': self.second_surname,
-            'matricula': getattr(self.student, "key", ""),
+            'matricula': getattr(self.student, "tuition", ""),
             'address': getattr(self.student, "address", ""),
             'postal_code': getattr(self.student, "postal_code", ""),
             'phone': getattr(self.student, "phone", ""),
-            'birthdate': getattr(self.student, "birthdate", ""),
+            'birthdate': str(getattr(self.student, "birthdate", "")),
             'social_service_name': getattr(social_service, "name", ""),
             'social_service_folio': getattr(social_service, "folio", ""),
+            'social_service_description': getattr(social_service, "description", ""),
+            'social_service_program_adviser': getattr(service_company, "officer", "-----"),
             'professional_practices_name': getattr(professional_practices, "name", ""),
             'faculty_name': getattr(self.student.faculty, "name", ""),
             "service_social_adviser": getattr(self.student.faculty, "service_social_adviser", ""),
             "professional_practices_adviser": getattr(self.student.faculty, "professional_practices_adviser", ""),
+            'professional_practices_description': getattr(professional_practices, "description", ""),
+            'professional_practices_program_adviser': getattr(professional_company, "officer", "----")
         }
+        return data
 
 class Student(models.Model):
     MALE = 'male'

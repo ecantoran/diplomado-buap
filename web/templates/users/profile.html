@@ -11,7 +11,7 @@
                     Nombre: {{ user.name }}
                 </div>
                 <div>
-                    Apellido materno: {{ user.first_name }}
+                    Apellido materno: {{ user.first_surname }}
                 </div>
                 <div>
                     Apellido paterno: {{ user.second_surname }}
@@ -40,8 +40,8 @@
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="student" role="tabpanel" aria-labelledby="student-tab">
                         <ul>
-                            <li><b>Facultad:</b> {{ user.studen.faculty.name }} </li>
-                        <li><b>Matricula:</b> {{ user.studen.key }}</li>
+                            <li><b>Facultad:</b> {{ user.student.faculty.name }} </li>
+                        <li><b>Matricula:</b> {{ user.student.tuition }}</li>
                         </ul>
                     </div>
                     <div class="tab-pane fade" id="programs" role="tabpanel" aria-labelledby="programs-tab">
@@ -51,6 +51,7 @@
                             <div class="card-body">
                                 {% if user.student.social_service %}
                                     <p class="card-text">{{ user.student.social_service.name }} - {{ user.student.social_service.folio }}</p>
+                                    <p class="card-text">{{ user.student.social_service.company.name }}</p>
                                     <p class="card-text">{{ user.student.social_service.description }}</p>
                                 {% else %}
                                 <b>Debes seleccionar un programa de servicio social</b>
@@ -58,12 +59,13 @@
                             </div>
                         </div>
                         <div class="card mb-3">
-                            <h4 class="card-header">Servicio Social</h4>
+                            <h4 class="card-header">Prácticas profesionales</h4>
                             <div class="card-body">
 
-                                {% if user.student.social_service %}
-                                    <p class="card-text">{{ user.student.social_service.name }} - {{ user.student.social_service.folio }}</p>
-                                    <p class="card-text">{{ user.student.social_service.description }}</p>
+                                {% if user.student.professional_practices %}
+                                    <p class="card-text">{{ user.student.professional_practices.name }} - {{ user.student.professional_practices.folio }}</p>
+                                    <p class="card-text">{{ user.student.social_service.company.name }}</p>
+                                    <p class="card-text">{{ user.student.professional_practices.description }}</p>
                                 {% else %}
                                     <b>Debes seleccionar un programa de practicas profesionales</b>
                                 {% endif %}
@@ -76,16 +78,23 @@
 
                         <div class="card-deck m-3">
                         {% for mode in document_list %}
+
                             <div class="card">
                             <h4 class="card-header">{{ mode.grouper }}</h4>
+
                                 <div class="card-body">
+                                    {% if mode.list.0.mode == 'PP' and user.student.professional_practices or mode.list.0.mode == 'SS' and user.student.social_service%}
                                 <ul>
                                     {% for document in mode.list %}
                                         <li><a href="/documents/{{ document.id }}/download/">{{ document.name }}</a></li>
                                     {% endfor %}
+                                {% else %}
+                                <li>Debes seleccionar tu programa para poder visualizar los documentos</li>
                                 </ul>
+                                    {% endif %}
                                 </div>
                             </div>
+
 
                         {% endfor %}
 

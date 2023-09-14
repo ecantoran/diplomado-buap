@@ -39,6 +39,8 @@ class ProgramListView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
     def get_queryset(self):
         if self.request.user.company:
             return Program.objects.filter(company=self.request.user.company)
+        elif getattr(self.request.user, 'student', None) is not None:
+            return Program.objects.filter(faculty=self.request.user.student.faculty)
         else:
             return Program.objects.all()
 
