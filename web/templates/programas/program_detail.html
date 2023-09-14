@@ -11,7 +11,11 @@
                     <p class="card-text"><b>Ofertado por: </b> {{ object.company }}</p>
                     <p class="card-text"><b>Descripción</b> {{ object.description }}</p>
                     {% if user.student %}
-                    <a href="/programs/{{ object.id }}/enroll/" class="btn btn-primary">Inscribirse</a>
+                        {% if object.kind == "SS" and user.student.social_service == object or object.kind == "PP" and user.student.professional_practices == object%}
+                            <a href="#" class="btn btn-outline-success disabled" role="button" aria-disabled="true">Ya estas inscrito a este programa</a>
+                        {% else %}
+                            <a href="/programs/{{ object.id }}/enroll/" class="btn btn-primary">Inscribirse</a>
+                        {% endif %}
                     {% endif %}
                 </div>
             </div>
