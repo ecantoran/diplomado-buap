@@ -10,7 +10,9 @@
                     <p class="card-text"><b>Area:</b> {{ object.area }}</p>
                     <p class="card-text"><b>Ofertado por: </b> {{ object.company }}</p>
                     <p class="card-text"><b>Descripción</b> {{ object.description }}</p>
-                    <a href="/program/{{ object.id }}/enroll/" class="btn btn-primary">Inscribirse</a>
+                    {% if user.student %}
+                    <a href="/programs/{{ object.id }}/enroll/" class="btn btn-primary">Inscribirse</a>
+                    {% endif %}
                 </div>
             </div>
 

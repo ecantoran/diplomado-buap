@@ -11,6 +11,8 @@ class Faculty(models.Model):
     class Meta:
         db_table = "faculty"
 
+    def __str__(self):
+        return self.name
 
 # class Career(models.Model):
 #     name = models.CharField(max_length=120)

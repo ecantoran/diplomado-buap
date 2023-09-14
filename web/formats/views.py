@@ -1,41 +1,48 @@
+from django.core.exceptions import PermissionDenied
 from django.http import Http404
 from django.shortcuts import render
 from django.views.generic.base import TemplateView, View
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from formats.models import Document
 
 
 # Create your views here.
-class DocumentView(TemplateView):
+class DocumentView(PermissionRequiredMixin, TemplateView):
     template_name = 'formats/index.html'
+    permission_required = ["formats.view_document"]
 
 
-class DocumentListView(ListView):
+class DocumentListView(PermissionRequiredMixin, ListView):
     model = Document
     template_name = "formats/list_formats.html"
+    permission_required = ["formats.view_document"]
 
 
-class DocumentCreateView(CreateView):
+class DocumentCreateView(PermissionRequiredMixin, CreateView):
     model = Document
     fields = ['name', 'description', 'mode']
     template_name = 'formats/create_format.html'
     success_url = "/documents/"
+    permission_required = ["formats.add_document"]
 
-class DocumentDetailView(DetailView):
+class DocumentDetailView(PermissionRequiredMixin, DetailView):
     model = Document
     template_name = 'formats/detail_format.html'
+    permission_required = ["formats.view_document"]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
 
-class DocumentUpdateView(UpdateView):
+class DocumentUpdateView(PermissionRequiredMixin, UpdateView):
     model = Document
     fields = ['name', 'description', 'mode']
     template_name = 'formats/update_format.html'
     success_url = "/documents/"
+    permission_required = ["formats.change_document"]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -43,12 +50,15 @@ class DocumentUpdateView(UpdateView):
         context["api_url"] = instance.create_ulr_view()
         return context
 
-class DocumentGeneratePDF(View):
+class DocumentGeneratePDF(PermissionRequiredMixin, View):
+    permission_required = ["formats.view_document"]
 
     def get(self, request, pk, *args, **kwargs):
+        if not request.user.student:
+            raise PermissionDenied()
         try:
             instance = Document.objects.get(pk=pk)
-            data = self.get_user_data("user")
+            data = self.get_user_data(request.user)
 
             return instance.generate_document(data)
 
@@ -56,21 +66,4 @@ class DocumentGeneratePDF(View):
             raise Http404
 
     def get_user_data(self, user):
-        return {
-            'email': "alumno@alumno.com",
-            'name': "Ramon",
-            'first_surname': "Garcia",
-            'second_surname': "Garcia",
-            'matricula': "201116415",
-            'address': "Av. Independencia 123",
-            'postal_code': "72000",
-            'phone': "123456789",
-            'birthdate': "1992-01-01",
-            'social_service_name': "Programa especial de servicios",
-            'social_service_folio': "SS2012842",
-            'professional_practices_name': "Programa de especial para profesionales",
-            'professional_practices_folio': "PP9092432",
-            'faculty_name': "Facultad de Ingeniería en Todologia",
-            "service_social_adviser": "Juan Perez Perez",
-            "professional_practices_adviser": "Ricardo Rodriguez Torres",
-        }
+        return user.get_data_to_dict()

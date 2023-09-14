@@ -31,26 +31,34 @@
 {#                <li class="nav-item {% if request.path == '/' %} active {% endif %}">#}
 {#                    <a class="nav-link " href="/">Home</a>#}
 {#                </li>#}
+            {% if perms.facultades.add_faculty %}
                 <li class="nav-item" >
                     <a class="nav-link {% if request.path == '/faculties/' %} active {% endif %}" href="/faculties/">
                         Facultades
                     </a>
                 </li>
+            {% endif %}
+            {% if perms.programas.view_program %}
                 <li class="nav-item">
                     <a class="nav-link {% if request.path == '/programs/' %} active {% endif %}" href="/programs/" >
                         Programas
                     </a>
                 </li>
+            {% endif %}
+            {% if perms.programas.add_company %}
                 <li class="nav-item" >
                     <a class="nav-link {% if request.path == '/companies/' %} active {% endif %}" href="/companies/" >
                         Compañias
                     </a>
                 </li>
+            {% endif %}
+            {% if perms.formats.add_document %}
                 <li class="nav-item" >
                     <a class="nav-link {% if request.path == '/documents/' %} active {% endif %}" href="/documents/" >
                         Documentos
                     </a>
                 </li>
+            {% endif %}
             </ul>
         <span class="navbar-text">
 

@@ -1,6 +1,7 @@
 {% extends "generic/base.html" %}
 
 {% block container %}
+    {% if perms.programas.add_program %}
     <div class="row m-5">
         <div class="col-10"></div>
         <div class="col">
@@ -11,6 +12,7 @@
         </div>
 
     </div>
+    {% endif %}
     {% regroup object_list by get_kind_display as programs %}
     {% for program in programs %}
         <div class="card m-5">

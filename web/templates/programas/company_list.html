@@ -1,16 +1,16 @@
 {% extends "generic/base.html" %}
 
 {% block container %}
+    {% if perms.programas.add_company %}
     <div class="row m-5">
         <div class="col-10"></div>
         <div class="col">
             <a href="/companies/create/" class="btn btn-primary" >
                 Crear nueva compañia
             </a>
-
         </div>
-
     </div>
+    {% endif %}
 <table class="table">
     <tr>
         <thead class="thead-light">
@@ -19,7 +19,6 @@
                 <th scope="col">Nombre</th>
                 <th scope="col">Dirección</th>
                 <th scope="col">Sector</th>
-
             </tr>
         </thead>
         <tbody>

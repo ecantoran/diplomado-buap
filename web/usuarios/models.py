@@ -38,7 +38,8 @@ class CustomUser(AbstractUser):
     company = models.OneToOneField(
         'programas.Company',
         on_delete=models.SET_NULL,
-        null=True
+        null=True,
+        blank=True
     )
 
     manager = CustomUserManager()
@@ -89,12 +90,14 @@ class Student(models.Model):
         'programas.Program',
         on_delete=models.SET_NULL,
         null=True,
+        blank=True,
         related_name='social_students'
     )
     professional_practices = models.ForeignKey(
         'programas.Program',
         on_delete=models.SET_NULL,
         null=True,
+        blank=True,
         related_name='professional_students'
     )
     faculty = models.ForeignKey(
@@ -106,5 +109,6 @@ class Student(models.Model):
     class Meta:
         db_table = "student"
 
-
+    def __str__(self):
+        return self.tuition
 

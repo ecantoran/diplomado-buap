@@ -91,21 +91,29 @@ class PDFGeneratorAPI:
         }
         payload = {
             "data": {
-                "nombre": "Jhon",
-                "apellido": "Doe",
-                "matricula": "111111"
+                'email': "alumno@alumno.com",
+                'name': "Ramon",
+                'first_surname': "Garcia",
+                'second_surname': "Garcia",
+                'matricula': "201116415",
+                'address': "Av. Independencia 123",
+                'postal_code': "72000",
+                'phone': "123456789",
+                'birthdate': "1992-01-01",
+                'social_service_name': "Programa especial de servicios",
+                'social_service_folio': "SS2012842",
+                'professional_practices_name': "Programa de especial para profesionales",
+                'professional_practices_folio': "PP9092432",
+                'faculty_name': "Facultad de Ingeniería en Todologia",
+                "service_social_adviser": "Juan Perez Perez",
+                "professional_practices_adviser": "Ricardo Rodriguez Torres",
             }
         }
         payload = json.dumps(payload)
-        print("Request")
         conn.request("POST", f"/api/v4/templates/{self.api_identifier}/editor", payload, headers)
-        print("Response")
         response = conn.getresponse()
-        print(response.status)
         if response.status == 200:
             data = response.read()
-            print("Data")
-            print(data)
             data = json.loads(data.decode("utf-8"))
             return data.get("response")
         else:

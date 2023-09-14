@@ -18,6 +18,7 @@
                 </div>
             </div>
         </div>
+    {% if user.student %}
 
         <div class="card m-5">
 
@@ -49,7 +50,8 @@
                             <h4 class="card-header">Servicio Social</h4>
                             <div class="card-body">
                                 {% if user.student.social_service %}
-                                Datos del programa seleccionado
+                                    <p class="card-text">{{ user.student.social_service.name }} - {{ user.student.social_service.folio }}</p>
+                                    <p class="card-text">{{ user.student.social_service.description }}</p>
                                 {% else %}
                                 <b>Debes seleccionar un programa de servicio social</b>
                                 {% endif %}
@@ -60,7 +62,8 @@
                             <div class="card-body">
 
                                 {% if user.student.social_service %}
-                                    Datos del programa seleccionado
+                                    <p class="card-text">{{ user.student.social_service.name }} - {{ user.student.social_service.folio }}</p>
+                                    <p class="card-text">{{ user.student.social_service.description }}</p>
                                 {% else %}
                                     <b>Debes seleccionar un programa de practicas profesionales</b>
                                 {% endif %}
@@ -92,6 +95,7 @@
                 </div>
             </div>
         </div>
+    {% endif %}
     {% if user.company %}
         <div class="card m-5">
 
