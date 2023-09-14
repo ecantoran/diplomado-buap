@@ -20,6 +20,8 @@ class LoginView(View):
     form_class = LoginForm
 
     def get(self, request):
+        if request.user.is_authenticated:
+            return redirect("/profile/")
         form = self.form_class()
         return render(request, self.template_name, {"form": form})
 
@@ -34,7 +36,7 @@ class LoginView(View):
                 print("login")
                 login(request, user)
                 messages.info(request, f"You are now logged in as {username}.")
-                return redirect("/faculties/")
+                return redirect("/profile/")
             else:
                 print("invalid user")
                 messages.error(request, "Invalid username or password.")
