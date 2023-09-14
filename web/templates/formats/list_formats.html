@@ -1,35 +1,45 @@
 {% extends "generic/base.html" %}
 
 {% block container %}
-    <div class="row m-5">
-    <div class="col-10"></div>
-    <div class="col">
-            <a href="/documents/create/" class="btn btn-primary" >
-                Crear nuevo documento
-            </a>
+    <section class="d-flex flex-column justify-content-end align-items-center">
+        <div class="container-fluid">
+            <div class="row m-3">
+                <div class="col-10"></div>
+                <div class="col">
+                    <a href="/documents/create/" class="btn btn-primary">
+                        Crear nuevo documento
+                    </a>
 
-    </div>
+                </div>
 
-    </div>
-
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead class="thead-light">
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Descripción</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for doc in object_list %}
-                <tr>
-                    <th><a href="/documents/{{ doc.id }}/update/"> {{ doc.id }}</a> </th>
-                    <td> {{ doc.name }}</td>
-                    <td> {{ doc.description }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+            </div>
+            <div class="card">
+                <h3 class="card-header">Lista de documentos</h3>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead class="thead-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Tipo</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for doc in object_list %}
+                                <tr>
+                                    <th><a href="/documents/{{ doc.id }}/update/"> {{ doc.id }}</a></th>
+                                    <td> {{ doc.name }}</td>
+                                    <td> {{ doc.description }}</td>
+                                    <td> {{ doc.get_mode_display }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

@@ -1,8 +1,10 @@
 {% extends "generic/base.html" %}
 
 {% block container %}
+    <section class="d-flex flex-column justify-content-end align-items-center">
+<div class="container-fluid">
     {% if perms.programas.add_program %}
-    <div class="row m-5">
+    <div class="row m-3">
         <div class="col-10"></div>
         <div class="col">
             <a href="/programs/create/" class="btn btn-primary" >
@@ -16,36 +18,41 @@
     {% regroup object_list by get_kind_display as programs %}
     {% for program in programs %}
         <div class="card m-5">
-        <div class="card-header">
-            {{ program.grouper }}
-        </div>
-        <div class="card-body">
-            <table class="table">
-                <tr>
-                    <thead class="thead-light">
-                        <tr>
-                            <th scope="col">Id</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Folio</th>
-                            <th scope="col">Compañia</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for program in program.list %}
-                        <tr>
-                            <td><a href="/programs/{{ program.id }}">{{ program.id }}</a></td>
-                            <td>{{ program.name }}</td>
-                            <td>{{ program.folio }}</td>
-                            <td>{{ program.company }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-            </table>
-        </div>
+            <div class="card-header">
+                {{ program.grouper }}
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <tr>
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Folio</th>
+                                <th scope="col">Compañia</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for program in program.list %}
+                            <tr>
+                                <td><a href="/programs/{{ program.id }}">{{ program.id }}</a></td>
+                                <td>{{ program.name }}</td>
+                                <td>{{ program.folio }}</td>
+                                <td>{{ program.company }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                </table>
+
+            </div>
         </div>
 {% if is_paginated %}
     {% include "generic/pagination.html" %}
 {% endif %}
+        {% empty %}
+        <h3>Lo sentimos, aun no hay programas para tu facultad</h3>
     {% endfor %}
+</div>
+    </section>
 
 {% endblock %}

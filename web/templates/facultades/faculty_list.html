@@ -1,38 +1,46 @@
 {% extends "generic/base.html" %}
 
 {% block container %}
-    <div class="row m-5">
-        <div class="col-10"></div>
-        <div class="col">
-            <a href="/faculties/create/" class="btn btn-primary" >
-                Crear nueva facultad
-            </a>
+    <section class="d-flex flex-column justify-content-end align-items-center">
+        <div class="container-fluid">
+            <div class="row m-3">
+                <div class="col-10"></div>
+                <div class="col">
+                    <a href="/faculties/create/" class="btn btn-primary" >
+                        Crear nueva facultad
+                    </a>
 
+                </div>
+
+            </div>
+        <div class="card">
+            <h3 class="card-header">Lista de empresas</h3>
+        <div class="card-body">
+            <table class="table">
+                <tr>
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Dirección</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for faculty in object_list %}
+                        <tr>
+                            <td><a href="/faculty/{{ faculty.id }}">{{ faculty.id }}</a></td>
+                            <td>{{faculty.name}}</td>
+                            <td>{{faculty.address}}</td>
+                        </tr>
+                            {% empty %}
+                            No existen empresas aún
+                        {% endfor %}
+                    </tbody>
+            </table>
+            {% if is_paginated %}
+                {% include "generic/pagination.html" %}
+            {% endif %}
         </div>
-
-    </div>
-
-<table class="table">
-    <tr>
-        <thead class="thead-light">
-            <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Dirección</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for faculty in object_list %}
-            <tr>
-                <td><a href="/faculty/{{ faculty.id }}">{{ faculty.id }}</a></td>
-                <td>{{faculty.name}}</td>
-                <td>{{faculty.address}}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-</table>
-{% if is_paginated %}
-    {% include "generic/pagination.html" %}
-{% endif %}
-
+        </div>
+    </section>
 {% endblock %}
