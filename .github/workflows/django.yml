@@ -2,7 +2,7 @@ name: Django CI
 
 on:
   push:
-    branches: [ "main", "develop", "feature/heroku" ]
+    branches: [ "develop", "feature/heroku" ]
   pull_request:
     branches: [ "main" ]
 env:
