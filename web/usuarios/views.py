@@ -1,14 +1,13 @@
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
+from django.contrib.auth import signals
 from django.views import View
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import DetailView, UpdateView
 
-from diplomado import settings
 from formats.models import Document
-from .forms import NameForm, LoginForm
+from usuarios.forms import NameForm, LoginForm
 from .models import CustomUser
 
 
@@ -31,17 +30,35 @@ class LoginView(View):
         if form.is_valid():
             username = form.cleaned_data.get('email')
             password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
+
+            user = authenticate(username=username, password=password, request=request)
             if user is not None:
-                print("login")
                 login(request, user)
-                messages.info(request, f"You are now logged in as {username}.")
+                signals.user_logged_in.send(
+                    sender=CustomUser,
+                    request=request,
+                    user=user,
+                )
+                # messages.info(request, f"You are now logged in as {username}.")
                 return redirect("/profile/")
             else:
-                print("invalid user")
+                signals.user_login_failed.send(
+                    sender=CustomUser,
+                    request=request,
+                    credentials={
+                        'email': form.cleaned_data.get('email'),
+                    },
+                )
                 messages.error(request, "Invalid username or password.")
         else:
             print("Invalid form")
+            signals.user_login_failed.send(
+                sender=CustomUser,
+                request=request,
+                credentials={
+                    'email': form.cleaned_data.get('email'),
+                },
+            )
             messages.error(request, "Invalid username or password.")
         return render(
             request=request,

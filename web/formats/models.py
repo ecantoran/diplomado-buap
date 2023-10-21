@@ -3,7 +3,6 @@ from django.db import models
 from core.utils import ProgramChoices
 
 
-
 # Create your models here.
 class Document(models.Model, PDFGeneratorAPI):
     name = models.CharField(max_length=50)

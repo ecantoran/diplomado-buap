@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib import admin
-from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.contrib.auth.forms import ReadOnlyPasswordHashField, UserCreationForm
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext, gettext_lazy as _
 
@@ -10,7 +10,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 # Register your models here.
 
-class UserCreationForm(forms.ModelForm):
+class CustomUserCreationForm(UserCreationForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
 

@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from core.utils import ProgramChoices, SectorChoices
 
-# Create your models here.
+
 class Program(models.Model):
 
     name = models.CharField(max_length=150)
